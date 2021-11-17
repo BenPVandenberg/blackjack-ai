@@ -3,16 +3,25 @@ import random
 
 class Deck:
 
-    def __init__(self):
+    def __init__(self, num_decks=1):
         self.cards = []
-        self.build()
+        self.__build(num_decks)
 
-    def build(self):
+    def __repr__(self) -> str:
+        return f"Deck of {len(self.cards)} cards"
+
+    def __build(self, num_decks):
+        one_deck = []
+
         for suit in Card.SUITS:
             for rank in range(1, 11):
-                self.cards.append(Card(rank, suit))
+                one_deck.append(Card(rank, suit))
             for face_card in Card.FACE_CARDS:
-                self.cards.append(Card(face_card, suit))
+                one_deck.append(Card(face_card, suit))
+
+        # multiple decks
+        for _ in range(num_decks):
+            self.cards.extend(one_deck)
 
     def shuffle(self):
         random.shuffle(self.cards)
