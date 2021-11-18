@@ -1,4 +1,5 @@
 import random
+import random_api
 
 
 class Deck:
@@ -25,6 +26,7 @@ class Deck:
 
     def shuffle(self):
         random.shuffle(self.cards)
+        self.cards = random_api.shuffle(self.cards)
 
     def draw(self):
         if len(self.cards) == 0:
