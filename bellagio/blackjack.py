@@ -91,7 +91,7 @@ class Blackjack:
         else:
             self.__current_hand += 1
 
-    def end_turn(self):
+    def end(self):
         self.__game_over = True
         self.__current_hand = self.__DEALER_HAND_ID
         output = self.__return_state("Game over")
@@ -99,6 +99,8 @@ class Blackjack:
 
         dealer_score = self.__run_dealer()
         total_winnings = 0
+        wins = 0
+        losses = 0
 
         for i, hand in enumerate(self.__player_hands):
             player_score = self.get_playing_value(hand)
@@ -111,6 +113,7 @@ class Blackjack:
                     "winnings": -self.__bets[i],
                 })
                 total_winnings -= self.__bets[i]
+                losses += 1
                 continue
 
             if dealer_score > self.HIGHEST_VALUE:
@@ -121,6 +124,7 @@ class Blackjack:
                     "winnings": self.__bets[i] * 2,
                 })
                 total_winnings += self.__bets[i] * 2
+                wins += 1
                 continue
 
             if player_score > dealer_score:
@@ -131,6 +135,7 @@ class Blackjack:
                     "winnings": self.__bets[i] * 2,
                 })
                 total_winnings += self.__bets[i] * 2
+                wins += 1
                 continue
 
             if player_score < dealer_score:
@@ -141,9 +146,13 @@ class Blackjack:
                     "winnings": -self.__bets[i],
                 })
                 total_winnings -= self.__bets[i]
+                losses += 1
                 continue
 
         output["total_winnings"] = total_winnings
+        output["wins"] = wins
+        output["losses"] = losses
+        output["wl_ratio"] = wins / losses if losses != 0 else wins
 
         return output
 
@@ -219,4 +228,4 @@ if __name__ == "__main__":
     game.split()
     game.stand()
     game.split()
-    print(game.end_turn())
+    print(game.end())
