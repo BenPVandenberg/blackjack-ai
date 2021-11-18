@@ -3,6 +3,9 @@ import random_api
 
 
 class Deck:
+    """
+        Class to manage the deck
+    """
 
     def __init__(self, num_decks=1):
         self.cards = []
@@ -12,6 +15,13 @@ class Deck:
         return f"Deck of {len(self.cards)} cards"
 
     def __build(self, num_decks):
+        """
+            Builds the deck with (num_decks * 52) cards
+            
+            Args:
+                num_decks: number of decks to build
+        """
+
         one_deck = []
 
         for suit in Card.SUITS:
@@ -25,8 +35,13 @@ class Deck:
             self.cards.extend(one_deck)
 
     def shuffle(self):
+        """
+            Shuffles the deck
+        """
+
         random.shuffle(self.cards)
-        self.cards = random_api.shuffle(self.cards)
+        api_shuffle = random_api.shuffle(self.cards)
+        self.cards = api_shuffle or self.cards
 
     def draw(self):
         if len(self.cards) == 0:
@@ -36,6 +51,10 @@ class Deck:
 
 
 class Card:
+    """
+        Class to manage the individual cards
+    """
+
     SUITS = ["Clubs", "Diamonds", "Hearts", "Spades"]
     FACE_CARDS = ["Jack", "Queen", "King"]
 

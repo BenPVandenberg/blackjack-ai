@@ -1,9 +1,13 @@
 import requests
+import random
 
 
 def shuffle(x):
     """
-        Shuffles a list of numbers from start to end.
+        Shuffles a list of numbers from start to end using the random.org API
+
+        Args:
+            x (list): list of elements to be shuffled
     """
 
     try:
@@ -17,4 +21,5 @@ def shuffle(x):
         return [x[int(i)] for i in new_order]
 
     except requests.exceptions.HTTPError:
-        return x
+        # If the API call fails, use a pseudo-random shuffle
+        random.shuffle(x)
