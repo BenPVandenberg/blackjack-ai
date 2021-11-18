@@ -2,6 +2,8 @@ from deck import Deck, Card
 
 
 class Blackjack:
+    NUMBER_OF_DECKS = 6
+    HIGHEST_VALUE = 21
     __DEALER_HAND_ID = -1
     __DEALER_HIT_THRESHOLD = 17
 
@@ -15,7 +17,7 @@ class Blackjack:
 
     def start(self, bets: list[int]):
         # Initialize the deck
-        deck = Deck()
+        deck = Deck(self.NUMBER_OF_DECKS)
         deck.shuffle()
 
         # init the player's hands
@@ -41,7 +43,7 @@ class Blackjack:
         current_hand.append(self.__deck.draw())
         message = "Hit Success"
 
-        if min(self.get_hand_value(current_hand)) > 21:
+        if min(self.get_hand_value(current_hand)) > self.HIGHEST_VALUE:
             self.__next_hand()
             message = "Bust"
 
