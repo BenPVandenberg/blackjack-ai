@@ -77,17 +77,54 @@ class Blackjack:
         output["results"] = []
 
         dealer_score = self.__run_dealer()
-        winnings_total = 0
+        total_winnings = 0
 
         for i, hand in enumerate(self.__player_hands):
-            player_score = self.get_all_hand_values(hand)
-            if min(player_score) > self.HIGHEST_VALUE:
+            player_score = self.get_playing_value(hand)
+
+            if player_score > self.HIGHEST_VALUE:
+                output["results"].append({
+                    "hand_id": i,
+                    "player_win": False,
+                    "reason": "Player Bust",
+                    "winnings": -self.__bets[i],
+                })
+                total_winnings -= self.__bets[i]
                 continue
 
-            if min(player_score) > dealer_score:
-                self.__bets[i] += self.__bets[i]
-            elif min(player_score) == dealer_score:
-                self.__bets[i] += self.__bets[i] / 2
+            if dealer_score > self.HIGHEST_VALUE:
+                output["results"].append({
+                    "hand_id": i,
+                    "player_win": True,
+                    "reason": "Dealer Bust",
+                    "winnings": self.__bets[i] * 2,
+                })
+                total_winnings += self.__bets[i] * 2
+                continue
+
+            if player_score > dealer_score:
+                output["results"].append({
+                    "hand_id": i,
+                    "player_win": True,
+                    "reason": "Player beat Dealer",
+                    "winnings": self.__bets[i] * 2,
+                })
+                total_winnings += self.__bets[i] * 2
+                continue
+
+            if player_score < dealer_score:
+                output["results"].append({
+                    "hand_id": i,
+                    "player_win": False,
+                    "reason": "Dealer beat Player",
+                    "winnings": -self.__bets[i],
+                })
+                total_winnings -= self.__bets[i]
+                continue
+
+        output["total_winnings"] = total_winnings
+
+        return output
 
     def __run_dealer(self):
         dealer_hand = self.__dealer_hand
@@ -158,5 +195,4 @@ if __name__ == "__main__":
     game = Blackjack()
 
     print(game.start([100, 100]))
-    # print(game.end_turn())
-    print(game.get_state())
+    print(game.end_turn())
