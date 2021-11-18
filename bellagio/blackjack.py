@@ -209,6 +209,17 @@ class Blackjack:
                 wins += 1
                 continue
 
+            if player_score <= dealer_score:
+                output["results"].append({
+                    "hand_id": i,
+                    "player_win": False,
+                    "reason": "Dealer beat Player",
+                    "winnings": -self.__bets[i],
+                })
+                total_winnings -= self.__bets[i]
+                losses += 1
+                continue
+
             if player_score > dealer_score:
                 output["results"].append({
                     "hand_id": i,
@@ -220,21 +231,13 @@ class Blackjack:
                 wins += 1
                 continue
 
-            if player_score < dealer_score:
-                output["results"].append({
-                    "hand_id": i,
-                    "player_win": False,
-                    "reason": "Dealer beat Player",
-                    "winnings": -self.__bets[i],
-                })
-                total_winnings -= self.__bets[i]
-                losses += 1
-                continue
+            # if no conditions are met, an unknown error has occurred
+            raise Exception("Unknown Error")
 
         output["total_winnings"] = total_winnings
         output["wins"] = wins
         output["losses"] = losses
-        output["wl_ratio"] = wins / losses if losses != 0 else wins
+        output["win_percentage"] = wins / (wins + losses)
 
         return output
 
