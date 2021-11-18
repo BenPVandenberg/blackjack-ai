@@ -39,6 +39,9 @@ class Blackjack:
         return self.__return_state("Game started")
 
     def split(self):
+        if self.__game_over:
+            return self.__return_state("Game over")
+
         if not self.__is_users_turn():
             return self.__return_state("Not your turn")
 
@@ -60,6 +63,8 @@ class Blackjack:
         return self.__return_state("Split success")
 
     def hit(self):
+        if self.__game_over:
+            return self.__return_state("Game over")
         if not self.__is_users_turn():
             return self.__return_state("Not your turn")
 
@@ -74,6 +79,8 @@ class Blackjack:
         return self.__return_state(message)
 
     def stand(self):
+        if self.__game_over:
+            return self.__return_state("Game over")
         if not self.__is_users_turn():
             return self.__return_state("Not your turn")
 
