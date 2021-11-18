@@ -322,7 +322,7 @@ class Blackjack:
                 [12]
 
                 >>> get_all_hand_values([Card(1, "Spades"), Card(5, "Spades")])
-                [6, 11]
+                [6, 16]
 
                 >>> get_all_hand_values([Card(1, "Spades"), Card(1, "Hearts")])
                 [2, 12, 22]
@@ -356,7 +356,7 @@ class Blackjack:
                 12
 
                 >>> get_playing_value([Card(1, "Spades"), Card(5, "Spades")])
-                11
+                16
 
                 >>> get_playing_value([Card(1, "Spades"), Card(1, "Hearts")])
                 12
