@@ -59,6 +59,27 @@ class Blackjack:
         else:
             self.__current_hand += 1
 
+    def __run_dealer(self):
+        dealer_hand = self.__dealer_hand
+
+        while min(
+                self.get_hand_value(dealer_hand)) < self.__DEALER_HIT_THRESHOLD:
+
+            current_values = self.get_hand_value(dealer_hand)
+            valid_values = [
+                v for v in current_values if v <= self.HIGHEST_VALUE
+            ]
+
+            # if all current values are greater than 21, the dealer has busted
+            if not valid_values:
+                return min(current_values)
+
+            if max(valid_values) > self.__DEALER_HIT_THRESHOLD:
+                return max(valid_values)
+
+            dealer_hand.append(self.__deck.draw())
+
+        return min(self.get_hand_value(dealer_hand))
 
     def get_state(self):
         return self.__return_state("Get state request")
