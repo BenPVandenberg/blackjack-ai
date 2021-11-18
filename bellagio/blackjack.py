@@ -58,7 +58,7 @@ class Blackjack:
 
         self.__next_hand()
 
-        return self.__return_state("Stand Success")
+        return self.__return_state("Stand success")
 
     def __is_users_turn(self):
         return self.__current_hand != self.__DEALER_HAND_ID
@@ -73,7 +73,7 @@ class Blackjack:
     def end_turn(self):
         self.__game_over = True
         self.__current_hand = self.__DEALER_HAND_ID
-        output = self.__return_state("Game Over")
+        output = self.__return_state("Game over")
         output["results"] = []
 
         dealer_score = self.__run_dealer()
