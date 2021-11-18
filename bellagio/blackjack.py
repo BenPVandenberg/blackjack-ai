@@ -39,6 +39,9 @@ class Blackjack:
         return self.__return_state("Game started")
 
     def hit(self):
+        if not self.__is_users_turn():
+            return self.__return_state("Not your turn")
+
         current_hand = self.__player_hands[self.__current_hand]
         current_hand.append(self.__deck.draw())
         message = "Hit Success"
@@ -50,9 +53,15 @@ class Blackjack:
         return self.__return_state(message)
 
     def stand(self):
+        if not self.__is_users_turn():
+            return self.__return_state("Not your turn")
+
         self.__next_hand()
 
         return self.__return_state("Stand Success")
+
+    def __is_users_turn(self):
+        return self.__current_hand != self.__DEALER_HAND_ID
 
     def __next_hand(self):
         if (self.__current_hand + 1) == len(self.__bets):
@@ -84,7 +93,7 @@ class Blackjack:
         return min(self.get_hand_value(dealer_hand))
 
     def get_state(self):
-        return self.__return_state("Get state request")
+        return self.__return_state("State request")
 
     def __return_state(self, message=None):
         dealer_hand = self.__dealer_hand[:1] if not self.__game_over else self.__dealer_hand
@@ -125,4 +134,6 @@ if __name__ == "__main__":
 
     game = Blackjack()
 
-    game.start([100, 100])
+    print(game.start([100, 100]))
+    # print(game.end_turn())
+    print(game.get_state())
