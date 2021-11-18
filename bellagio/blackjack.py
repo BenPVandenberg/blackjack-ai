@@ -6,11 +6,12 @@ class Blackjack:
     __DEALER_HIT_THRESHOLD = 17
 
     def __init__(self):
-        self.bets = None
-        self.deck = None
-        self.player_hands = None
-        self.current_hand = None
-        self.dealer_hand = None
+        self.__bets = None
+        self.__deck = None
+        self.__player_hands = None
+        self.__current_hand = None
+        self.__dealer_hand = None
+        self.__game_over = True
 
     def start(self, bets: list[int]):
         # Initialize the deck
@@ -26,17 +27,18 @@ class Blackjack:
                 player_hands[i].append(deck.draw())
             dealer_hand.append(deck.draw())
 
-        self.bets = bets
-        self.deck = deck
-        self.player_hands = player_hands
-        self.current_hand = 0
-        self.dealer_hand = dealer_hand
+        self.__bets = bets
+        self.__deck = deck
+        self.__player_hands = player_hands
+        self.__current_hand = 0
+        self.__dealer_hand = dealer_hand
+        self.__game_over = False
 
         return self.__return_state("Game started")
 
     def hit(self):
-        current_hand = self.player_hands[self.current_hand]
-        current_hand.append(self.deck.draw())
+        current_hand = self.__player_hands[self.__current_hand]
+        current_hand.append(self.__deck.draw())
         message = "Hit Success"
 
         if min(self.get_hand_value(current_hand)) > 21:
@@ -51,21 +53,24 @@ class Blackjack:
         return self.__return_state("Stand Success")
 
     def __next_hand(self):
-        if (self.current_hand + 1) == len(self.bets):
+        if (self.__current_hand + 1) == len(self.__bets):
             # if no more hands left, return the dealer's hand
-            self.current_hand = self.__DEALER_HAND_ID
+            self.__current_hand = self.__DEALER_HAND_ID
         else:
-            self.current_hand += 1
+            self.__current_hand += 1
+
 
     def get_state(self):
         return self.__return_state("Get state request")
 
     def __return_state(self, message=None):
+        dealer_hand = self.__dealer_hand[:1] if not self.__game_over else self.__dealer_hand
+
         return {
             "message": message,
-            "player_hands": self.player_hands,
-            "current_hand": self.current_hand,
-            "dealer_hand": self.dealer_hand
+            "player_hands": self.__player_hands,
+            "current_hand": self.__current_hand,
+            "dealer_hand": dealer_hand,
         }
 
     @staticmethod
