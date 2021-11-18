@@ -46,7 +46,7 @@ class Blackjack:
         current_hand.append(self.__deck.draw())
         message = "Hit Success"
 
-        if min(self.get_hand_value(current_hand)) > self.HIGHEST_VALUE:
+        if min(self.get_all_hand_values(current_hand)) > self.HIGHEST_VALUE:
             self.__next_hand()
             message = "Bust"
 
@@ -70,27 +70,39 @@ class Blackjack:
         else:
             self.__current_hand += 1
 
+    def end_turn(self):
+        self.__game_over = True
+        self.__current_hand = self.__DEALER_HAND_ID
+        output = self.__return_state("Game Over")
+        output["results"] = []
+
+        dealer_score = self.__run_dealer()
+        winnings_total = 0
+
+        for i, hand in enumerate(self.__player_hands):
+            player_score = self.get_all_hand_values(hand)
+            if min(player_score) > self.HIGHEST_VALUE:
+                continue
+
+            if min(player_score) > dealer_score:
+                self.__bets[i] += self.__bets[i]
+            elif min(player_score) == dealer_score:
+                self.__bets[i] += self.__bets[i] / 2
+
     def __run_dealer(self):
         dealer_hand = self.__dealer_hand
 
-        while min(
-                self.get_hand_value(dealer_hand)) < self.__DEALER_HIT_THRESHOLD:
+        while min(self.get_all_hand_values(
+                dealer_hand)) < self.__DEALER_HIT_THRESHOLD:
 
-            current_values = self.get_hand_value(dealer_hand)
-            valid_values = [
-                v for v in current_values if v <= self.HIGHEST_VALUE
-            ]
+            playing_score = self.get_playing_value(dealer_hand)
 
-            # if all current values are greater than 21, the dealer has busted
-            if not valid_values:
-                return min(current_values)
-
-            if max(valid_values) > self.__DEALER_HIT_THRESHOLD:
-                return max(valid_values)
+            if playing_score > self.__DEALER_HIT_THRESHOLD:
+                return playing_score
 
             dealer_hand.append(self.__deck.draw())
 
-        return min(self.get_hand_value(dealer_hand))
+        return min(self.get_all_hand_values(dealer_hand))
 
     def get_state(self):
         return self.__return_state("State request")
@@ -106,7 +118,7 @@ class Blackjack:
         }
 
     @staticmethod
-    def get_hand_value(hand: list[Card]) -> list[int]:
+    def get_all_hand_values(hand: list[Card]) -> list[int]:
         """
             Returns all the possible value(s) of the hand
 
@@ -128,6 +140,17 @@ class Blackjack:
             rtn.append(init_count + (10 * (i + 1)))
 
         return rtn
+
+    @classmethod
+    def get_playing_value(cls, hand: list[Card]) -> int:
+        hand_values = cls.get_all_hand_values(hand)
+
+        eligible_values = [v for v in hand_values if v <= cls.HIGHEST_VALUE]
+
+        if not eligible_values:
+            return min(hand_values)
+
+        return max(eligible_values)
 
 
 if __name__ == "__main__":
