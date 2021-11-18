@@ -44,8 +44,18 @@ class Deck:
         self.cards = api_shuffle or self.cards
 
     def draw(self):
+        """
+            Draws a card from the deck
+
+            Returns:
+                Card: card drawn from the deck
+
+            Raises:
+                IndexError: if the deck is empty
+        """
+
         if len(self.cards) == 0:
-            return None
+            raise IndexError("No cards left in deck")
         else:
             return self.cards.pop()
 
@@ -58,7 +68,7 @@ class Card:
     SUITS = ["Clubs", "Diamonds", "Hearts", "Spades"]
     FACE_CARDS = ["Jack", "Queen", "King"]
 
-    def __init__(self, rank, suit):
+    def __init__(self, rank: str, suit: str):
         self.suit = suit
         self.rank = rank
 
