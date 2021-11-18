@@ -155,7 +155,7 @@ class Blackjack:
 
             playing_score = self.get_playing_value(dealer_hand)
 
-            if playing_score > self.__DEALER_HIT_THRESHOLD:
+            if playing_score >= self.__DEALER_HIT_THRESHOLD:
                 return playing_score
 
             dealer_hand.append(self.__deck.draw())
