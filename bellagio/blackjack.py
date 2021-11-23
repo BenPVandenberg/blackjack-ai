@@ -169,7 +169,7 @@ class Blackjack:
                     'total_winnings': -100,
                     'wins': 0,
                     'losses': 1,
-                    'wl_ratio': 0.0
+                    'win_percentage': 0.0
                 }
         """
 
