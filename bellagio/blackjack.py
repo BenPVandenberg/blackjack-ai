@@ -123,6 +123,37 @@ class Blackjack:
 
         return self.__return_state("Split success")
 
+    def double(self):
+        """
+            Doubles the bet on the current hand
+
+            Returns:
+                A dict containing the state of the game
+        """
+
+        if self.__game_over:
+            return self.__return_state("Game over")
+
+        if not self.__is_users_turn():
+            return self.__return_state("Not your turn")
+
+        current_hand = self.__player_hands[self.__current_hand]
+        if len(current_hand) != 2:
+            return self.__return_state("You can only double on first move")
+
+        # double the bet
+        self.__bets[self.__current_hand] *= 2
+
+        # hit
+        state = self.hit()
+
+        # if successful, stand
+        if state["message"] == "Hit success":
+            self.__next_hand()
+            return self.__return_state("Double success")
+
+        return state
+
     def __is_users_turn(self):
         """
             Checks if it is the user's turn
@@ -375,5 +406,9 @@ class Blackjack:
 if __name__ == "__main__":
     game = Blackjack()
 
-    print(game.start([100]))
+    print(game.start([100] * 10))
+
+    for _ in range(10):
+        state = game.double()
+
     print(game.end())
