@@ -52,37 +52,6 @@ class Blackjack:
 
         return self.__return_state("Game started")
 
-    def split(self):
-        """
-            Splits the current hand into two hands
-
-            Returns:
-                A dict containing the state of the game
-        """
-
-        if self.__game_over:
-            return self.__return_state("Game over")
-
-        if not self.__is_users_turn():
-            return self.__return_state("Not your turn")
-
-        current_hand = self.__player_hands[self.__current_hand]
-        if len(current_hand) != 2:
-            return self.__return_state("Can't split more than 2 cards")
-
-        if current_hand[0].rank != current_hand[1].rank:
-            return self.__return_state("Can't split cards that are different")
-
-        # Split the hand
-        card_to_move = current_hand.pop()
-        current_hand.append(self.__deck.draw())
-
-        # Add the new hand + bet
-        self.__player_hands.append([card_to_move, self.__deck.draw()])
-        self.__bets.append(self.__bets[self.__current_hand])
-
-        return self.__return_state("Split success")
-
     def hit(self):
         """
             Draws a card from the deck and adds it to the current hand
@@ -122,6 +91,37 @@ class Blackjack:
         self.__next_hand()
 
         return self.__return_state("Stand success")
+
+    def split(self):
+        """
+            Splits the current hand into two hands
+
+            Returns:
+                A dict containing the state of the game
+        """
+
+        if self.__game_over:
+            return self.__return_state("Game over")
+
+        if not self.__is_users_turn():
+            return self.__return_state("Not your turn")
+
+        current_hand = self.__player_hands[self.__current_hand]
+        if len(current_hand) != 2:
+            return self.__return_state("Can't split more than 2 cards")
+
+        if current_hand[0].rank != current_hand[1].rank:
+            return self.__return_state("Can't split cards that are different")
+
+        # Split the hand
+        card_to_move = current_hand.pop()
+        current_hand.append(self.__deck.draw())
+
+        # Add the new hand + bet
+        self.__player_hands.append([card_to_move, self.__deck.draw()])
+        self.__bets.append(self.__bets[self.__current_hand])
+
+        return self.__return_state("Split success")
 
     def __is_users_turn(self):
         """
