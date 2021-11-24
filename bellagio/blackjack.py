@@ -314,7 +314,7 @@ class Blackjack:
                         ]
                     ],
                     "dealer_hand": [
-                        8 of Diamonds
+                        8 of Hearts
                     ]
                 }
         """
