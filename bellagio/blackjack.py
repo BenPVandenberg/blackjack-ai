@@ -18,6 +18,7 @@ class Blackjack:
         self.__current_hand = None
         self.__dealer_hand = None
         self.__game_over = True
+        self.__final_state = None
 
     def start(self, bets: list[int]):
         """
@@ -49,6 +50,7 @@ class Blackjack:
         self.__current_hand = 0
         self.__dealer_hand = dealer_hand
         self.__game_over = False
+        self.__final_state = None
 
         return self.__return_state("Game started")
 
@@ -270,6 +272,8 @@ class Blackjack:
         output["losses"] = losses
         output["win_percentage"] = wins / (wins + losses)
 
+        self.__final_state = output
+
         return output
 
     def __run_dealer(self):
@@ -328,6 +332,10 @@ class Blackjack:
                 A dict containing the state of the game
         """
 
+        # if the game is over and final state is computed, always return it
+        if self.__final_state is not None:
+            return self.__final_state
+
         dealer_hand = self.__dealer_hand[:1] if not self.__game_over else self.__dealer_hand
 
         return {
@@ -374,7 +382,7 @@ class Blackjack:
     @classmethod
     def get_playing_value(cls, hand: list[Card]) -> int:
         """
-            Returns the playing value of the hand, i.e. the highest possible value < 21
+            Returns the playing value of the hand, i.e. the highest possible value <= 21
 
             Args:
                 hand: list of Card objects
@@ -391,6 +399,9 @@ class Blackjack:
 
                 >>> get_playing_value([Card(1, "Spades"), Card(1, "Hearts")])
                 12
+
+                >>> get_playing_value([Card(1, "Spades"), Card(10, "Hearts"), Card(10, "Diamonds"), Card(10, "Spades")])
+                31
         """
 
         hand_values = cls.get_all_hand_values(hand)
