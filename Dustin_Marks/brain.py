@@ -6,7 +6,6 @@ class Brain:
     def __init__(self):
         self.moves = {}
 
-
     def createBrain(self):
         """
             creates the initial random brain
@@ -16,4 +15,11 @@ class Brain:
         pair_table = {}
         ace_table = {}
 
-        self.moves = {"value_table": value_table, "pair_table": pair_table, "ace_table": ace_table}
+        self.moves = {
+            "value_table": value_table,
+            "pair_table": pair_table,
+            "ace_table": ace_table
+        }
+
+    def mutateBrain(self, parentBrainMoves):
+        self.moves = parentBrainMoves
