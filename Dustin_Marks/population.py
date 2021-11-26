@@ -15,7 +15,7 @@ class Population:
         self.parent_size = 5
         self.generation = 0
 
-    def __init_players(self, parents) -> List[Ai_player]:
+    def create_new_gen_players(self, parents):
 
         players = []
         for _ in range(self.pop_size):
@@ -26,9 +26,9 @@ class Population:
             player.brain.mutateBrain(randomBrain.brain.moves)
             players.append[players]
 
-        self.players = players
+        return players
 
-    def create_new_gen_players(self, parents) -> List[Ai_player]:
+    def __init_players(self) -> List[Ai_player]:
         players = []
         for _ in range(self.pop_size):
             player = Ai_player()
