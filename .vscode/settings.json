@@ -1,3 +1,6 @@
 {
-    "python.envFile": "${workspaceFolder}/python.env"
+    "terminal.integrated.env.windows": {
+        "PYTHONPATH": "${workspaceFolder}/bellagio;${env:PYTHONPATH}"
+    },
+    "python.analysis.extraPaths": ["bellagio"]
 }
