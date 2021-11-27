@@ -6,8 +6,8 @@ class Ai_player:
         blackjack Ai player
     """
 
-    def __init__(self):
-        self.brain = Brain()
+    def __init__(self, parentPlayer=None):
+        self.brain = Brain(parentPlayer.brain)
         self.total_winnings = 0
         self.finished = False
         # self.__build(num_decks)

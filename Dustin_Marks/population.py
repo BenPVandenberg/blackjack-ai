@@ -19,21 +19,17 @@ class Population:
 
         players = []
         for _ in range(self.pop_size):
-            randomBrain = random.choices(parents,
+            randomAiPlayer = random.choices(parents,
                                          weights=(50, 25, 15, 8, 2),
                                          k=1)[0]
-            player = Ai_player()
-            player.brain.mutateBrain(randomBrain.brain.moves)
-            players.append[players]
+            players.append[Ai_player(randomAiPlayer)]
 
         return players
 
     def __init_players(self) -> List[Ai_player]:
         players = []
         for _ in range(self.pop_size):
-            player = Ai_player()
-            player.brain.createBrain()
-            players.append[players]
+            players.append[Ai_player()]
 
         return players
 
