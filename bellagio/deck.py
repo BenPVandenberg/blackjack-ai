@@ -82,7 +82,7 @@ class Card:
     def __repr__(self):
         return str(self.rank) + " of " + self.suit
 
-    def __eq__(self, other: Card):
+    def __eq__(self, other: Union[Card, int]):
         if isinstance(other, Card):
             return self.rank == other.rank and self.suit == other.suit
 
