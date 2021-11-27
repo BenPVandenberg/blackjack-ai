@@ -6,13 +6,13 @@ class Ai_player:
         blackjack Ai player
     """
 
-    def __init__(self, parentPlayer=None):
-        self.brain = Brain(parentPlayer.brain)
+    def __init__(self, parent_player=None):
+        self.brain = Brain(parent_player.brain)
         self.total_winnings = 0
         self.finished = False
         # self.__build(num_decks)
 
-    def playRounds(self, num_rounds):
+    def play_rounds(self, num_rounds):
         """
             plays the set number of blackjack rounds
             
@@ -21,11 +21,11 @@ class Ai_player:
         """
 
         for _ in range(num_rounds):
-            self.__playRound()
+            self.__play_round()
 
         self.finished = True
 
-    def __playRound(self):
+    def __play_round(self):
         # do Blackjack things
         return "yay"
 

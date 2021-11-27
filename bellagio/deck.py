@@ -1,5 +1,6 @@
 import random
 import random_api
+from typing import Union
 
 
 class Deck:
@@ -68,7 +69,7 @@ class Card:
     SUITS = ["Clubs", "Diamonds", "Hearts", "Spades"]
     FACE_CARDS = ["Jack", "Queen", "King"]
 
-    def __init__(self, rank: str, suit: str):
+    def __init__(self, rank: Union[int, str], suit: str):
         self.suit = suit
         self.rank = rank
 
