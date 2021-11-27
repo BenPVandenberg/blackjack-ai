@@ -324,7 +324,7 @@ class Blackjack:
         """
         return self.__return_state("State request")
 
-    def __return_state(self, message=None):
+    def __return_state(self, message: str = None):
         """
             Compiles a dict containing the state of the game
 

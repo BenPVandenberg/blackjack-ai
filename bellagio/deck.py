@@ -1,6 +1,7 @@
 import random
 import random_api
 from typing import Union
+from __future__ import annotations
 
 
 class Deck:
@@ -8,14 +9,14 @@ class Deck:
         Class to manage the deck
     """
 
-    def __init__(self, num_decks=1):
+    def __init__(self, num_decks: int = 1):
         self.cards = []
         self.__build(num_decks)
 
     def __repr__(self) -> str:
         return f"Deck of {len(self.cards)} cards"
 
-    def __build(self, num_decks):
+    def __build(self, num_decks: int):
         """
             Builds the deck with (num_decks * 52) cards
             
@@ -71,7 +72,7 @@ class Card:
 
     def __init__(self, rank: Union[int, str], suit: str):
         self.suit = suit
-        self.rank = rank
+        self.rank = str(rank)
 
         if self.rank in ["Jack", "Queen", "King"]:
             self.value = 10
@@ -81,5 +82,11 @@ class Card:
     def __repr__(self):
         return str(self.rank) + " of " + self.suit
 
-    def __eq__(self, other):
-        return self.rank == other.rank and self.suit == other.suit
+    def __eq__(self, other: Card):
+        if isinstance(other, Card):
+            return self.rank == other.rank and self.suit == other.suit
+
+        if isinstance(other, int):
+            return self.value == other
+
+        return False
