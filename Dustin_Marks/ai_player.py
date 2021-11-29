@@ -1,4 +1,6 @@
+from __future__ import annotations
 from brain import Brain
+from blackjack import Blackjack
 
 
 class Ai_player:
@@ -6,8 +8,13 @@ class Ai_player:
         blackjack Ai player
     """
 
-    def __init__(self, parent_player=None):
-        self.brain = Brain(parent_player.brain)
+    BET_AMOUNT = 100
+
+    def __init__(self, parent_player: Ai_player = None):
+        if parent_player is None:
+            self.brain = Brain()
+        else:
+            self.brain = Brain(parent_player.brain)
         self.total_winnings = 0
         self.finished = False
         # self.__build(num_decks)
@@ -21,13 +28,37 @@ class Ai_player:
         """
 
         for _ in range(num_rounds):
-            self.__play_round()
+            self.total_winnings += self.__play_round()
 
         self.finished = True
 
     def __play_round(self):
-        # do Blackjack things
-        return "yay"
+        """
+            Play 1 full game of blackjack
+
+            Returns:
+                int: total winnings from the round
+        """
+
+        game = Blackjack()
+
+        state = game.start([self.BET_AMOUNT])
+
+        while state['current_hand'] != -1:
+
+            current_hand = state["player_hands"][state['current_hand']]
+            move = self.brain.get_move(current_hand, state["dealer_hand"][0])
+
+            if move == 'H':
+                state = game.hit()
+            elif move == 'S':
+                state = game.stand()
+            elif move == 'D':
+                state = game.double()
+            elif move == 'P':
+                state = game.split()
+
+        return game.end()["total_winnings"]
 
     def get_fitness(self):
         return self.total_winnings

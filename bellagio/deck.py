@@ -1,7 +1,7 @@
+from __future__ import annotations
 import random
 import random_api
 from typing import Union
-from __future__ import annotations
 
 
 class Deck:

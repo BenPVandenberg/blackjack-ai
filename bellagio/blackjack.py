@@ -1,3 +1,4 @@
+from typing import Any
 from deck import Deck, Card
 
 
@@ -20,7 +21,7 @@ class Blackjack:
         self.__game_over = True
         self.__final_state = None
 
-    def start(self, bets: list[int]):
+    def start(self, bets: list[int]) -> dict[str, Any]:
         """
             Starts a new game
 
@@ -141,7 +142,9 @@ class Blackjack:
 
         current_hand = self.__player_hands[self.__current_hand]
         if len(current_hand) != 2:
-            return self.__return_state("You can only double on first move")
+            # Can't double if there are more than 2 cards
+            # preform a hit instead
+            return self.hit()
 
         # double the bet
         self.__bets[self.__current_hand] *= 2
