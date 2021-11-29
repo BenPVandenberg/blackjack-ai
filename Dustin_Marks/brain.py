@@ -105,7 +105,8 @@ class Brain:
 
         c1 = player_cards[0].value
         c2 = player_cards[1].value
-        if len(player_cards) == 2 and c1 == c2 and c1 >= 10:
+        if len(player_cards) == 2 and c1 == c2 and player_cards[
+                0].rank != player_cards[1].rank and c1 >= 10:
             c1 = 'T'
             c2 = 'T'
 

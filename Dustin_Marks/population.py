@@ -45,7 +45,7 @@ class Population:
 
         for player in self.players:
             player.play_rounds(self.round_size)
-            console, log("player completed")
+            print("player completed")
 
     def __get_best_players(self) -> list[Ai_player]:
         """
