@@ -42,8 +42,6 @@ class Deck:
         """
 
         random.shuffle(self.cards)
-        api_shuffle = random_api.shuffle(self.cards)
-        self.cards = api_shuffle or self.cards
 
     def draw(self):
         """

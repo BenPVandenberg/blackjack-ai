@@ -24,7 +24,7 @@ game.end() # end the game (will also end the hand)
 
 #### Mid-Game
 
-````json
+````python
 {
     "message": "State request",
     "current_hand": 0,
@@ -35,7 +35,7 @@ game.end() # end the game (will also end the hand)
 
 #### End-Game
 
-````json
+````python
 {
     "message": "Game over",
     "current_hand": -1,
