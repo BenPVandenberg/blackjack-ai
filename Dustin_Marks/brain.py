@@ -101,31 +101,28 @@ class Brain:
         #parse player cards for dictionary lookup
         player_score = Blackjack.get_playing_value(player_cards)
         if player_score == 21:
-            return 'H'
+            return 'S'
 
-        c1 = player_cards[0].value
-        c2 = player_cards[1].value
-        if len(player_cards) == 2 and c1 == c2 and player_cards[
-                0].rank != player_cards[1].rank and c1 >= 10:
-            c1 = 'T'
-            c2 = 'T'
+        c0 = player_cards[0]
+        c1 = player_cards[1]
 
-        elif len(player_cards) == 2 and player_cards[0].rank == player_cards[
-                1].rank and c1 == 1:
-            c1 = 'A'
-            c2 = 'A'
-
-        aces_count = len([c for c in player_cards if c.rank == 1])
-
-        #pair_table
-        if len(player_cards) == 2 and c1 == c2:
-            return self.__moves['pair_table'][str(c1) + '-' + str(c1)][d]
-        #aces_table
-        if len(player_cards) == 2 and aces_count == 1:
-            if (c1 == 1):
-                return self.__moves['aces_table']['A-' + str(c2)][d]
+        #case hand is a pair (use pair_table)
+        if len(player_cards) == 2 and c0.rank == c1.rank:
+            if c0.value == 1:
+                return self.__moves['pair_table']['A-A'][d]
+            elif c0.value >= 10:
+                return self.__moves['pair_table']['T-T'][d]
             else:
-                return self.__moves['aces_table']['A-' + str(c1)][d]
+                return self.__moves['pair_table'][str(c0.rank)+'-'+str(c1.rank)][d]
+
+        #case hand contains an ace (use ace_table)
+        aces_count = len([c for c in player_cards if c.rank == 1])
+        if len(player_cards) == 2 and aces_count == 1:
+            if (c0.rank == 1):
+                return self.__moves['aces_table']['A-' + str(c1.rank)][d]
+            else:
+                return self.__moves['aces_table']['A-' + str(c0.rank)][d]
+
         #value_table
         return self.__moves['value_table'][str(player_score)][d]
 
