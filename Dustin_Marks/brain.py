@@ -50,10 +50,11 @@ class Brain:
         #value_table
         total_moves = 16 * 10
         to_randomize = random.sample(range(total_moves),
-                                     amount // 100 * total_moves)
+                                     int((amount * total_moves) / 100))
         counter = 0
         for p in range(20, 4, -1):
-            self.__moves['value_table'][str(p)] = {}
+            if not str(p) in self.__moves['value_table'].keys():
+                self.__moves['value_table'][str(p)] = {}
             for d in possible_cards:
                 if amount == 100 or counter in to_randomize:
                     self.__moves['value_table'][str(p)][d] = random.choice(
@@ -63,10 +64,11 @@ class Brain:
         #pair_table
         total_moves = 8 * 10
         to_randomize = random.sample(range(total_moves),
-                                     amount // 100 * total_moves)
+                                     int((amount * total_moves) / 100))
         counter = 0
         for p in reversed(possible_cards):
-            self.__moves['pair_table'][p + '-' + p] = {}
+            if not (p + '-' + p) in self.__moves['pair_table'].keys():
+                self.__moves['pair_table'][p + '-' + p] = {}
             for d in possible_cards:
                 if amount == 100 or counter in to_randomize:
                     self.__moves['pair_table'][p + '-' + p][d] = random.choice(
@@ -76,10 +78,11 @@ class Brain:
         #ace_table
         total_moves = 10 * 10
         to_randomize = random.sample(range(total_moves),
-                                     amount // 100 * total_moves)
+                                     int((amount * total_moves) / 100))
         counter = 0
         for p in range(9, 1, -1):
-            self.__moves['ace_table']['A-' + str(p)] = {}
+            if not ('A-' + str(p)) in self.__moves['ace_table'].keys():
+                self.__moves['ace_table']['A-' + str(p)] = {}
             for d in possible_cards:
                 if amount == 100 or counter in to_randomize:
                     self.__moves['ace_table']['A-' + str(p)][d] = random.choice(
@@ -113,7 +116,8 @@ class Brain:
             elif c0.value >= 10:
                 return self.__moves['pair_table']['T-T'][d]
             else:
-                return self.__moves['pair_table'][str(c0.rank)+'-'+str(c1.rank)][d]
+                return self.__moves['pair_table'][str(c0.rank) + '-' +
+                                                  str(c1.rank)][d]
 
         #case hand contains an ace (use ace_table)
         aces_count = len([c for c in player_cards if c.rank == 1])

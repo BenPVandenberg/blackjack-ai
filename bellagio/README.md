@@ -44,7 +44,7 @@ game.end() # end the game (will also end the hand)
     "results": [
         {
             "hand_id": 0,
-            "player_win": false,
+            "player_win": False,
             "reason": "Dealer beat Player",
             "winnings": -100
         }

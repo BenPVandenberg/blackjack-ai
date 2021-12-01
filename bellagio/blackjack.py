@@ -1,3 +1,9 @@
+"""
+    A blackjack game, played only by python api.
+
+    Ben Vandenberg, 2021
+"""
+
 from typing import Any
 from deck import Deck, Card
 

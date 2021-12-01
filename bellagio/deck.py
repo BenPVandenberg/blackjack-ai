@@ -1,3 +1,8 @@
+"""
+    Deck and Card classes used for bellagio
+
+    Ben Vandenberg, 2021
+"""
 from __future__ import annotations
 import random
 from typing import Union
