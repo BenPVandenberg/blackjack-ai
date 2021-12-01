@@ -37,7 +37,7 @@ class Ai_player:
             Play 1 full game of blackjack
 
             Returns:
-                int: total winnings from the round
+                int: total profit from the round
         """
 
         game = Blackjack()

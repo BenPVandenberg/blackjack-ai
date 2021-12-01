@@ -205,7 +205,7 @@ class Blackjack:
                             'hand_id': 0,
                             'player_win': False,
                             'reason': 'Dealer beat Player',
-                            'winnings': -100
+                            'profit': -100
                         }
                     ],
                     'total_profit': -100,
@@ -234,7 +234,7 @@ class Blackjack:
                     "hand_id": i,
                     "player_win": False,
                     "reason": "Player Bust",
-                    "winnings": -self.__bets[i],
+                    "profit": -self.__bets[i],
                 })
                 total_profit -= self.__bets[i]
                 losses += 1
@@ -245,7 +245,7 @@ class Blackjack:
                     "hand_id": i,
                     "player_win": True,
                     "reason": "Dealer Bust",
-                    "winnings": self.__bets[i],
+                    "profit": self.__bets[i],
                 })
                 total_profit += self.__bets[i]
                 wins += 1
@@ -256,7 +256,7 @@ class Blackjack:
                     "hand_id": i,
                     "player_win": False,
                     "reason": "Dealer beat Player",
-                    "winnings": -self.__bets[i],
+                    "profit": -self.__bets[i],
                 })
                 total_profit -= self.__bets[i]
                 losses += 1
@@ -267,7 +267,7 @@ class Blackjack:
                     "hand_id": i,
                     "player_win": True,
                     "reason": "Player beat Dealer",
-                    "winnings": self.__bets[i],
+                    "profit": self.__bets[i],
                 })
                 total_profit += self.__bets[i]
                 wins += 1

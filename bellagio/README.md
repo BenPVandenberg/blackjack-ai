@@ -46,7 +46,7 @@ game.end() # end the game (will also end the hand)
             "hand_id": 0,
             "player_win": False,
             "reason": "Dealer beat Player",
-            "winnings": -100
+            "profit": -100
         }
     ],
     "total_profit": -100,
