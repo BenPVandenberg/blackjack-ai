@@ -27,9 +27,13 @@ class Main:
 
             end = time.time()
             print(f"Generation {self.generation} took: {end - start}")
-            print(f"Current best: {self.current_best.total_winnings}\n\n")
+            print(f"Current best: {self.current_best.total_profit}\n\n")
 
             self.generation += 1
+
+            if self.generation == 100:
+                print("best brain boi", self.current_best.brain)
+                break
 
 
 if __name__ == "__main__":

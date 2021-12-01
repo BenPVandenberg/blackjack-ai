@@ -49,7 +49,7 @@ game.end() # end the game (will also end the hand)
             "winnings": -100
         }
     ],
-    "total_winnings": -100,
+    "total_profit": -100,
     "wins": 0,
     "losses": 1,
     "win_percentage": 0.0

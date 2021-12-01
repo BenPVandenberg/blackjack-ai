@@ -21,7 +21,7 @@ class Population:
         players = []
 
         if self.best_player is None \
-             or parents[0].total_winnings > self.best_player.total_winnings:
+             or parents[0].total_profit > self.best_player.total_profit:
 
             self.best_player = copy.deepcopy(parents[0])
 
@@ -31,7 +31,7 @@ class Population:
                                               k=1)[0]
             players.append(Ai_player(random_ai_player))
 
-        parents[0].total_winnings = 0
+        parents[0].total_profit = 0
         players.append(copy.deepcopy(parents[0]))
 
         return players

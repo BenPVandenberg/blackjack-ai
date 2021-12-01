@@ -15,7 +15,7 @@ class Ai_player:
             self.brain = Brain()
         else:
             self.brain = Brain(parent_player.brain)
-        self.total_winnings = 0
+        self.total_profit = 0
         self.finished = False
         # self.__build(num_decks)
 
@@ -28,7 +28,7 @@ class Ai_player:
         """
 
         for _ in range(num_rounds):
-            self.total_winnings += self.__play_round()
+            self.total_profit += self.__play_round()
 
         self.finished = True
 
@@ -58,7 +58,7 @@ class Ai_player:
             elif move == 'P':
                 state = game.split()
 
-        return game.end()["total_winnings"]
+        return game.end()["total_profit"]
 
     def get_fitness(self):
-        return self.total_winnings
+        return self.total_profit

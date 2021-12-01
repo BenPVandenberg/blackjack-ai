@@ -208,7 +208,7 @@ class Blackjack:
                             'winnings': -100
                         }
                     ],
-                    'total_winnings': -100,
+                    'total_profit': -100,
                     'wins': 0,
                     'losses': 1,
                     'win_percentage': 0.0
@@ -221,7 +221,7 @@ class Blackjack:
         output["results"] = []
 
         dealer_score = self.__run_dealer()
-        total_winnings = 0
+        total_profit = 0
         wins = 0
         losses = 0
 
@@ -236,7 +236,7 @@ class Blackjack:
                     "reason": "Player Bust",
                     "winnings": -self.__bets[i],
                 })
-                total_winnings -= self.__bets[i]
+                total_profit -= self.__bets[i]
                 losses += 1
                 continue
 
@@ -245,9 +245,9 @@ class Blackjack:
                     "hand_id": i,
                     "player_win": True,
                     "reason": "Dealer Bust",
-                    "winnings": self.__bets[i] * 2,
+                    "winnings": self.__bets[i],
                 })
-                total_winnings += self.__bets[i] * 2
+                total_profit += self.__bets[i]
                 wins += 1
                 continue
 
@@ -258,7 +258,7 @@ class Blackjack:
                     "reason": "Dealer beat Player",
                     "winnings": -self.__bets[i],
                 })
-                total_winnings -= self.__bets[i]
+                total_profit -= self.__bets[i]
                 losses += 1
                 continue
 
@@ -267,16 +267,16 @@ class Blackjack:
                     "hand_id": i,
                     "player_win": True,
                     "reason": "Player beat Dealer",
-                    "winnings": self.__bets[i] * 2,
+                    "winnings": self.__bets[i],
                 })
-                total_winnings += self.__bets[i] * 2
+                total_profit += self.__bets[i]
                 wins += 1
                 continue
 
             # if no conditions are met, an unknown error has occurred
             raise Exception("Unknown Error")
 
-        output["total_winnings"] = total_winnings
+        output["total_profit"] = total_profit
         output["wins"] = wins
         output["losses"] = losses
         output["win_percentage"] = wins / (wins + losses)
