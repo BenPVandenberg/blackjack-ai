@@ -27,20 +27,22 @@ class Blackjack:
         self.__game_over = True
         self.__final_state = None
 
-    def start(self, bets: list[int]) -> dict[str, Any]:
+    def start(self, bets: list[int], deck: Deck = None) -> dict[str, Any]:
         """
             Starts a new game
 
             Args:
                 bets: A list of bets for each hand
+                deck: A deck to use, if None, a new deck will be used
 
             Returns:
                 A dict containing the state of the game
         """
 
         # Initialize the deck
-        deck = Deck(self.NUMBER_OF_DECKS)
-        deck.shuffle()
+        if deck is None:
+            deck = Deck(self.NUMBER_OF_DECKS)
+            deck.shuffle()
 
         # init the player's hands
         player_hands = [[] for _ in bets]

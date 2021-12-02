@@ -2,20 +2,23 @@ import random
 import copy
 from multiprocessing import Pool
 from ai_player import Ai_player
+from deck import Deck
 
 
 class Population:
     """
         blackjack Ai player population
     """
-    POPULATION_SIZE = 50
+    POPULATION_SIZE = 100
+    BJ_ROUNDS = 100
     PARENT_SIZE = 5
-    MAX_THREADS = 9  # 9 is the most efficient
+    MAX_THREADS = 10  # 9 is the most efficient
 
     def __init__(self):
         self.generation = 0
         self.best_player = None
         self.players = self.__init_players()
+        self.__decks = []
 
     def __create_new_gen_players(self, parents: list[Ai_player]):
 
@@ -46,6 +49,12 @@ class Population:
             
         """
 
+        # generate the decks
+        self.__decks = [Deck(6) for _ in range(self.BJ_ROUNDS)]
+        # shuffle the decks
+        for deck in self.__decks:
+            deck.shuffle()
+
         with Pool() as pool:
             players = pool.map(self.thread_worker, self.players)
 
@@ -56,7 +65,7 @@ class Population:
         return (self.best_player or self.players[0], self.players[0])
 
     def thread_worker(self, player: Ai_player):
-        player.play_rounds()
+        player.play_rounds(self.__decks)
 
         return player
 
