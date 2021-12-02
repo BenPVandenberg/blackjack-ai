@@ -33,6 +33,7 @@ class Blackjack:
 
             Args:
                 bets: A list of bets for each hand
+                deck: A deck to use, if None, a new deck will be used
 
             Returns:
                 A dict containing the state of the game

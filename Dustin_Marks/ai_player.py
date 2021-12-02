@@ -1,6 +1,7 @@
 from __future__ import annotations
 from brain import Brain
 from blackjack import Blackjack
+from deck import Deck
 
 
 class Ai_player:
@@ -9,7 +10,6 @@ class Ai_player:
     """
 
     BET_AMOUNT = 100
-    BJ_ROUNDS = 1000
 
     def __init__(self, parent_player: Ai_player = None):
         if parent_player is None:
@@ -19,15 +19,15 @@ class Ai_player:
         self.total_profit = 0
         # self.__build(num_decks)
 
-    def play_rounds(self):
+    def play_rounds(self, decks: list[Deck]):
         """
             plays the set number of blackjack rounds
         """
 
-        for _ in range(self.BJ_ROUNDS):
-            self.total_profit += self.__play_round()
+        for deck in decks:
+            self.total_profit += self.__play_round(deck)
 
-    def __play_round(self):
+    def __play_round(self, deck: Deck = None):
         """
             Play 1 full game of blackjack
 
@@ -37,7 +37,7 @@ class Ai_player:
 
         game = Blackjack()
 
-        state = game.start([self.BET_AMOUNT])
+        state = game.start([self.BET_AMOUNT], deck)
 
         while state['current_hand'] != -1:
 
