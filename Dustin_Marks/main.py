@@ -18,16 +18,17 @@ class Main:
             # time how long it takes to run a gen
             start = time.time()
 
-            self.population.play_generation()
-
             #did it reach goal
 
-            self.current_best = self.population.create_new_generation()
+            (self.current_best, attempt) = self.population.play_generation()
 
             end = time.time()
             print(f"Generation {self.generation} took: {end - start}")
-            print(f"Current best: {self.current_best.total_profit}\n\n")
+            print(
+                f"Current best: {self.current_best.total_profit}, attempt: {attempt.total_profit}\n\n"
+            )
 
+            self.population.create_new_generation()
             self.generation += 1
 
             if (self.generation % 100) == 0:

@@ -46,10 +46,14 @@ class Population:
             
         """
 
-        with Pool(self.MAX_THREADS) as pool:
+        with Pool() as pool:
             players = pool.map(self.thread_worker, self.players)
 
         self.players = players
+
+        self.players.sort(key=lambda x: x.get_fitness(), reverse=True)
+
+        return (self.best_player or self.players[0], self.players[0])
 
     def thread_worker(self, player: Ai_player):
         player.play_rounds()
@@ -65,11 +69,11 @@ class Population:
         self.players.sort(key=lambda x: x.get_fitness(), reverse=True)
         return self.players[:self.PARENT_SIZE]
 
-    def create_new_generation(self):
+    def create_new_generation(self) -> tuple[Ai_player, Ai_player]:
         parents = self.__get_best_players()
 
         self.players = self.__create_new_gen_players(parents)
 
         self.generation += 1
 
-        return self.best_player
+        return (self.best_player, self.players[0])
