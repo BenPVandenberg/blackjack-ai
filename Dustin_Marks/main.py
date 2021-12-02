@@ -1,5 +1,4 @@
 import time
-from ai_player import Ai_player
 from population import Population
 
 
@@ -31,9 +30,8 @@ class Main:
 
             self.generation += 1
 
-            if self.generation == 100:
+            if (self.generation % 100) == 0:
                 print("best brain boi", self.current_best.brain)
-                break
 
 
 if __name__ == "__main__":

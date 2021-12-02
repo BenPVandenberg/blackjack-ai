@@ -1,5 +1,6 @@
 import random
 import copy
+from multiprocessing import Pool
 from ai_player import Ai_player
 
 
@@ -8,8 +9,8 @@ class Population:
         blackjack Ai player population
     """
     POPULATION_SIZE = 50
-    BJ_ROUNDS = 1000
     PARENT_SIZE = 5
+    MAX_THREADS = 9  # 9 is the most efficient
 
     def __init__(self):
         self.generation = 0
@@ -45,9 +46,15 @@ class Population:
             
         """
 
-        for player in self.players:
-            player.play_rounds(self.BJ_ROUNDS)
-            # print("player completed")
+        with Pool(self.MAX_THREADS) as pool:
+            players = pool.map(self.thread_worker, self.players)
+
+        self.players = players
+
+    def thread_worker(self, player: Ai_player):
+        player.play_rounds()
+
+        return player
 
     def __get_best_players(self) -> list[Ai_player]:
         """

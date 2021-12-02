@@ -9,6 +9,7 @@ class Ai_player:
     """
 
     BET_AMOUNT = 100
+    BJ_ROUNDS = 1000
 
     def __init__(self, parent_player: Ai_player = None):
         if parent_player is None:
@@ -16,21 +17,15 @@ class Ai_player:
         else:
             self.brain = Brain(parent_player.brain)
         self.total_profit = 0
-        self.finished = False
         # self.__build(num_decks)
 
-    def play_rounds(self, num_rounds):
+    def play_rounds(self):
         """
             plays the set number of blackjack rounds
-            
-            Args:
-                num_rounds: number of rounds of blackjack played
         """
 
-        for _ in range(num_rounds):
+        for _ in range(self.BJ_ROUNDS):
             self.total_profit += self.__play_round()
-
-        self.finished = True
 
     def __play_round(self):
         """
