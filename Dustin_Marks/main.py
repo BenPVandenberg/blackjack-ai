@@ -13,7 +13,7 @@ class Main:
         self.generation = 0
         self.current_best = None
         self.best_counter = 0
-        self.best_max = 2
+        self.best_max = 50
 
     def main(self):
 
@@ -34,14 +34,14 @@ class Main:
                 f"Current best: {generation_best.total_profit}, attempt: {attempt.total_profit}\n\n"
             )
 
-            self.population.create_new_generation()
-            self.generation += 1
-
             if self.end_program(generation_best):
                 print(
                     f"AI has remained unchanged for {self.best_max} turns, best brain boi is",
                     generation_best.brain)
                 break
+
+            self.population.create_new_generation()
+            self.generation += 1
 
             if (self.generation % 100) == 0:
                 print("best brain boi", generation_best.brain)
