@@ -140,3 +140,13 @@ class Brain:
         output += '\n\npair_table\n\n'
         output += pd.DataFrame(self.__moves['pair_table']).T.to_string()
         return output
+
+    def bg_colour_col (self, col):
+        colours = {'S': 'red', 'H': 'green', 'D': 'yellow', 'P': 'purple'}
+        return ['background-color: %s' % colours[x] for _,x in col.iteritems()]
+
+    def to_html(self):
+        with open('move_tables.html', 'w+') as outfile:
+            outfile.write(pd.DataFrame(self.__moves['value_table']).T.style.apply(self.bg_colour_col).render())
+            outfile.write(pd.DataFrame(self.__moves['ace_table']).T.style.apply(self.bg_colour_col).render())
+            outfile.write(pd.DataFrame(self.__moves['pair_table']).T.style.apply(self.bg_colour_col).render())
