@@ -23,6 +23,7 @@ class Ai_player:
         """
             plays the set number of blackjack rounds
         """
+        self.total_profit = 0
 
         for deck in decks:
             self.total_profit += self.__play_round(deck)
