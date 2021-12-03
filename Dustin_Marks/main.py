@@ -34,11 +34,11 @@ class Main:
             print(
                 f"Current best: {self.population.best_player.total_profit}\n\n")
 
-            # if self.end_program(generation_best):
-            #     print(
-            #         f"AI has remained unchanged for {self.best_max} turns, best brain boi is",
-            #         generation_best.brain)
-            #     break
+            if self.end_program(self.population.best_player):
+                print(
+                    f"AI has remained unchanged for {self.best_max} turns, best brain boi is",
+                    self.population.best_player.brain)
+                break
 
             self.population.create_new_generation()
             self.generation += 1
@@ -50,7 +50,7 @@ class Main:
         if self.best_counter == self.best_max:
             return True
 
-        if self.current_best.total_profit == generation_best.total_profit:
+        if self.current_best is generation_best:
             self.best_counter += 1
 
         self.current_best = generation_best
