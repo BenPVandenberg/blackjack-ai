@@ -9,9 +9,9 @@ class Population:
         blackjack Ai player population
     """
     POPULATION_SIZE = 100
-    BJ_ROUNDS = 100
+    BJ_ROUNDS = 80000
     PARENT_SIZE = 5
-    MAX_THREADS = 9  # most efficient
+    MAX_THREADS = 40  # most efficient
 
     def __init__(self):
 
@@ -32,13 +32,14 @@ class Population:
 
         # an array of ai players that will make the next generation
         players_parents = random.choices(parents,
-                                         weights=(50, 25, 15, 8, 2),
+                                         weights=(55, 20, 15, 8, 2),
                                          k=(self.POPULATION_SIZE -
                                             self.PARENT_SIZE))
 
         self.players = [Ai_player(player) for player in players_parents]
 
-        for i in range(self.PARENT_SIZE):
+        # for i in range(self.PARENT_SIZE):
+        for i in range(1):
             self.players.append(parents[i])
 
     def __get_best_players(self, num) -> list[Ai_player]:

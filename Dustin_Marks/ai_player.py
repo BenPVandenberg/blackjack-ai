@@ -58,3 +58,8 @@ class Ai_player:
 
     def get_fitness(self):
         return self.total_profit
+
+    def __eq__(self, other: object) -> bool:
+        if isinstance(other, Ai_player):
+            return self.brain == other.brain
+        return False

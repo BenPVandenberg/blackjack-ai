@@ -141,12 +141,24 @@ class Brain:
         output += pd.DataFrame(self.__moves['pair_table']).T.to_string()
         return output
 
-    def bg_colour_col (self, col):
+    def bg_colour_col(self, col):
         colours = {'S': 'red', 'H': 'green', 'D': 'yellow', 'P': 'purple'}
-        return ['background-color: %s' % colours[x] for _,x in col.iteritems()]
+        return ['background-color: %s' % colours[x] for _, x in col.iteritems()]
 
     def to_html(self):
         with open('move_tables.html', 'w+') as outfile:
-            outfile.write(pd.DataFrame(self.__moves['value_table']).T.style.apply(self.bg_colour_col).render())
-            outfile.write(pd.DataFrame(self.__moves['ace_table']).T.style.apply(self.bg_colour_col).render())
-            outfile.write(pd.DataFrame(self.__moves['pair_table']).T.style.apply(self.bg_colour_col).render())
+            outfile.write(
+                pd.DataFrame(self.__moves['value_table']).T.style.apply(
+                    self.bg_colour_col).render())
+            outfile.write(
+                pd.DataFrame(self.__moves['ace_table']).T.style.apply(
+                    self.bg_colour_col).render())
+            outfile.write(
+                pd.DataFrame(self.__moves['pair_table']).T.style.apply(
+                    self.bg_colour_col).render())
+
+    def __eq__(self, other: object) -> bool:
+        if isinstance(other, Brain):
+            if (self.__moves == other.__moves):
+                return True
+        return False

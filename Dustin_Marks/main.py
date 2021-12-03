@@ -14,7 +14,7 @@ class Main:
         self.generation = 0
         self.current_best = None
         self.best_counter = 0
-        self.best_max = 1000
+        self.best_max = 25
 
     def main(self):
 
@@ -27,9 +27,11 @@ class Main:
             self.population.play_generation()
 
             if self.current_best is None:
-                self.current_best = copy.deepcopy(self.population.best_player)
+                self.current_best = self.population.best_player
 
             end = time.time()
+            if (self.best_counter != 0):
+                print(f"best player unchanged in {self.best_counter} round(s)")
             print(f"Generation {self.generation} took: {end - start}")
             print(
                 f"Current best: {self.population.best_player.total_profit}\n\n")
@@ -44,14 +46,17 @@ class Main:
             self.generation += 1
 
             if (self.generation % 100) == 0:
+                self.population.best_player.brain.to_html()
                 print("best brain boi", self.population.players[0].brain)
 
     def end_program(self, generation_best: Ai_player):
         if self.best_counter == self.best_max:
             return True
 
-        if self.current_best is generation_best:
+        if self.current_best == generation_best:
             self.best_counter += 1
+        else:
+            self.best_counter = 0
 
         self.current_best = generation_best
         return False
