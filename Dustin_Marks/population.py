@@ -8,8 +8,8 @@ class Population:
     """
         blackjack Ai player population
     """
-    POPULATION_SIZE = 100
-    BJ_ROUNDS = 80000
+    POPULATION_SIZE = 400
+    BJ_ROUNDS = 50000
     PARENT_SIZE = 5
     MAX_THREADS = 40  # most efficient
 
