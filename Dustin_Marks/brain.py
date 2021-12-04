@@ -62,7 +62,7 @@ class Brain:
                 counter += 1
 
         #pair_table
-        total_moves = 8 * 10
+        total_moves = 10 * 10
         to_randomize = random.sample(range(total_moves),
                                      int((amount * total_moves) / 100))
         counter = 0
@@ -76,7 +76,7 @@ class Brain:
                 counter += 1
 
         #ace_table
-        total_moves = 10 * 10
+        total_moves = 8 * 10
         to_randomize = random.sample(range(total_moves),
                                      int((amount * total_moves) / 100))
         counter = 0
@@ -145,8 +145,8 @@ class Brain:
         colours = {'S': 'red', 'H': 'green', 'D': 'yellow', 'P': 'purple'}
         return ['background-color: %s' % colours[x] for _, x in col.iteritems()]
 
-    def to_html(self):
-        with open('move_tables.html', 'w+') as outfile:
+    def to_html(self, path: str):
+        with open(path, 'w+') as outfile:
             outfile.write(
                 pd.DataFrame(self.__moves['value_table']).T.style.apply(
                     self.bg_colour_col).render())
