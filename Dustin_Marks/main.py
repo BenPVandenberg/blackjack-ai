@@ -1,5 +1,5 @@
 import time
-import copy
+import os
 from Dustin_Marks.ai_player import Ai_player
 from population import Population
 
@@ -42,12 +42,21 @@ class Main:
                     self.population.best_player.brain)
                 break
 
+            # make a folder for each generation
+            os.makedirs(f".\\gen_data\\{self.generation}")
+
+            self.population.best_player.brain.to_html(
+                f".\\gen_data\\{self.generation}\\top_brain.html")
+
+            # write total profit to file
+            with open(f".\\gen_data\\{self.generation}\\total_profit.txt",
+                      "w") as f:
+                f.write(str(self.population.best_player.total_profit))
+
+            print("best brain boi", self.population.best_player.brain)
+
             self.population.create_new_generation()
             self.generation += 1
-
-            if (self.generation % 100) == 0:
-                self.population.best_player.brain.to_html()
-                print("best brain boi", self.population.players[0].brain)
 
     def end_program(self, generation_best: Ai_player):
         if self.best_counter == self.best_max:
