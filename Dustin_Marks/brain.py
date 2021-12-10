@@ -20,7 +20,7 @@ class Brain:
 
         #make a deep copy and mutate if parent passed in
         if parent_brain is not None:
-            self.__moves = copy.deepcopy(parent_brain.__moves)
+            self.moves = copy.deepcopy(parent_brain.moves)
             self.mutate()
         else:
             self.__init_move_tables()
@@ -31,7 +31,7 @@ class Brain:
             Read table as moves['table_name']['my_score']['dealer_score']
         """
         #initialize high-level dicts
-        self.__moves = {'value_table': {}, 'ace_table': {}, 'pair_table': {}}
+        self.moves = {'value_table': {}, 'ace_table': {}, 'pair_table': {}}
 
     def mutate(self):
         """
@@ -53,11 +53,11 @@ class Brain:
                                      int((amount * total_moves) / 100))
         counter = 0
         for p in range(20, 4, -1):
-            if not str(p) in self.__moves['value_table'].keys():
-                self.__moves['value_table'][str(p)] = {}
+            if not str(p) in self.moves['value_table'].keys():
+                self.moves['value_table'][str(p)] = {}
             for d in possible_cards:
                 if amount == 100 or counter in to_randomize:
-                    self.__moves['value_table'][str(p)][d] = random.choice(
+                    self.moves['value_table'][str(p)][d] = random.choice(
                         possible_moves)
                 counter += 1
 
@@ -67,11 +67,11 @@ class Brain:
                                      int((amount * total_moves) / 100))
         counter = 0
         for p in reversed(possible_cards):
-            if not (p + '-' + p) in self.__moves['pair_table'].keys():
-                self.__moves['pair_table'][p + '-' + p] = {}
+            if not (p + '-' + p) in self.moves['pair_table'].keys():
+                self.moves['pair_table'][p + '-' + p] = {}
             for d in possible_cards:
                 if amount == 100 or counter in to_randomize:
-                    self.__moves['pair_table'][p + '-' + p][d] = random.choice(
+                    self.moves['pair_table'][p + '-' + p][d] = random.choice(
                         possible_pair_moves)
                 counter += 1
 
@@ -81,11 +81,11 @@ class Brain:
                                      int((amount * total_moves) / 100))
         counter = 0
         for p in range(9, 1, -1):
-            if not ('A-' + str(p)) in self.__moves['ace_table'].keys():
-                self.__moves['ace_table']['A-' + str(p)] = {}
+            if not ('A-' + str(p)) in self.moves['ace_table'].keys():
+                self.moves['ace_table']['A-' + str(p)] = {}
             for d in possible_cards:
                 if amount == 100 or counter in to_randomize:
-                    self.__moves['ace_table']['A-' + str(p)][d] = random.choice(
+                    self.moves['ace_table']['A-' + str(p)][d] = random.choice(
                         possible_moves)
                 counter += 1
 
@@ -112,33 +112,33 @@ class Brain:
         #case hand is a pair (use pair_table)
         if len(player_cards) == 2 and c0.rank == c1.rank:
             if c0.value == 1:
-                return self.__moves['pair_table']['A-A'][d]
+                return self.moves['pair_table']['A-A'][d]
             elif c0.value >= 10:
-                return self.__moves['pair_table']['T-T'][d]
+                return self.moves['pair_table']['T-T'][d]
             else:
-                return self.__moves['pair_table'][str(c0.rank) + '-' +
-                                                  str(c1.rank)][d]
+                return self.moves['pair_table'][str(c0.rank) + '-' +
+                                                str(c1.rank)][d]
 
         #case hand contains an ace (use ace_table)
         aces_count = len([c for c in player_cards if c.rank == 1])
         if len(player_cards) == 2 and aces_count == 1:
             if (c0.rank == 1):
-                return self.__moves['aces_table']['A-' + str(c1.rank)][d]
+                return self.moves['aces_table']['A-' + str(c1.rank)][d]
             else:
-                return self.__moves['aces_table']['A-' + str(c0.rank)][d]
+                return self.moves['aces_table']['A-' + str(c0.rank)][d]
 
         #value_table
-        return self.__moves['value_table'][str(player_score)][d]
+        return self.moves['value_table'][str(player_score)][d]
 
     def __str__(self):
         output = 'value_table\n\n'
-        output += pd.DataFrame(self.__moves['value_table']).T.to_string()
+        output += pd.DataFrame(self.moves['value_table']).T.to_string()
 
         output += '\n\nace_table\n\n'
-        output += pd.DataFrame(self.__moves['ace_table']).T.to_string()
+        output += pd.DataFrame(self.moves['ace_table']).T.to_string()
 
         output += '\n\npair_table\n\n'
-        output += pd.DataFrame(self.__moves['pair_table']).T.to_string()
+        output += pd.DataFrame(self.moves['pair_table']).T.to_string()
         return output
 
     def bg_colour_col(self, col):
@@ -148,17 +148,17 @@ class Brain:
     def to_html(self, path: str):
         with open(path, 'w+') as outfile:
             outfile.write(
-                pd.DataFrame(self.__moves['value_table']).T.style.apply(
+                pd.DataFrame(self.moves['value_table']).T.style.apply(
                     self.bg_colour_col).render())
             outfile.write(
-                pd.DataFrame(self.__moves['ace_table']).T.style.apply(
+                pd.DataFrame(self.moves['ace_table']).T.style.apply(
                     self.bg_colour_col).render())
             outfile.write(
-                pd.DataFrame(self.__moves['pair_table']).T.style.apply(
+                pd.DataFrame(self.moves['pair_table']).T.style.apply(
                     self.bg_colour_col).render())
 
     def __eq__(self, other: object) -> bool:
         if isinstance(other, Brain):
-            if (self.__moves == other.__moves):
+            if (self.moves == other.moves):
                 return True
         return False
