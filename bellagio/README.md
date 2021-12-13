@@ -2,6 +2,8 @@
 
 An API blackjack game.
 
+<sub>*Name inspired by Vegas casino</sub>
+
 ## Usage
 
 ````python

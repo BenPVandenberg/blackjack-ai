@@ -1,7 +1,17 @@
-# flamingo
+# Dustin Marks
 
-Chose top 3 over cross as its more resistant to randomness.
+An artificial intelligence that uses genetic algorithms to learn to play the game blackjack.
 
-Can change genetic algorithm by pop size, mutation rate + magnitude, and # rounds played
+NOTE: must have the bellagio folder in the `PYTHONPATH` environment variable
 
-<https://miro.com/app/board/o9J_lkNIQB8=/>
+<sub>*Name inspired by famous blackjack cheater</sub>
+
+## Structure
+
+| file       | description                                         |
+| ---------- | --------------------------------------------------- |
+| optimal    | a script that uses the move table to play blackjack |
+| main       | a script which runs many AI generations             |
+| population | a class which represents a population of AI         |
+| ai_player  | a class which represents an AI player               |
+| brain      | a class which represents a blackjack move table     |
